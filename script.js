@@ -16,7 +16,7 @@ const gradeScale = {
     '0.0': 0.0
 };
 
-// DOM Elements
+// DOM Elements - Semester GPA
 const courseNameInput = document.getElementById('courseName');
 const creditHoursInput = document.getElementById('creditHours');
 const gradeSelect = document.getElementById('gradeSelect');
@@ -28,6 +28,73 @@ const totalPointsDisplay = document.getElementById('totalPoints');
 const gpaResultDisplay = document.getElementById('gpaResult');
 const calculateBtn = document.getElementById('calculateBtn');
 const resetBtn = document.getElementById('resetBtn');
+
+// DOM Elements - Cumulative GPA
+let prevGPAInput, prevCreditsInput, currentGPAInput, currentCreditsInput;
+let calculateCGPABtn, resetCGPABtn, totalAllCreditsDisplay, totalAllPointsDisplay, cgpaResultDisplay;
+
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Get CGPA elements after DOM is loaded
+    prevGPAInput = document.getElementById('prevGPA');
+    prevCreditsInput = document.getElementById('prevCredits');
+    currentGPAInput = document.getElementById('currentGPA');
+    currentCreditsInput = document.getElementById('currentCredits');
+    calculateCGPABtn = document.getElementById('calculateCGPABtn');
+    resetCGPABtn = document.getElementById('resetCGPABtn');
+    totalAllCreditsDisplay = document.getElementById('totalAllCredits');
+    totalAllPointsDisplay = document.getElementById('totalAllPoints');
+    cgpaResultDisplay = document.getElementById('cgpaResult');
+
+    // Add CGPA event listeners
+    if (calculateCGPABtn) {
+        calculateCGPABtn.addEventListener('click', calculateCGPA);
+    }
+    if (resetCGPABtn) {
+        resetCGPABtn.addEventListener('click', resetCGPA);
+    }
+
+    // Load saved CGPA data
+    loadCGPAData();
+});
+
+// Tab switching
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const tabName = e.target.getAttribute('data-tab');
+            switchTab(tabName, e.target);
+        });
+    });
+
+    function switchTab(tabName, btn) {
+        // Hide all tabs
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Remove active class from all buttons
+        tabBtns.forEach(b => {
+            b.classList.remove('active');
+        });
+        
+        // Show selected tab
+        const selectedTab = document.getElementById(tabName);
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+    }
+});
+
+// ============================================
+// SEMESTER GPA CALCULATOR FUNCTIONS
+// ============================================
 
 // Event Listeners
 addCourseBtn.addEventListener('click', addCourse);
@@ -80,6 +147,7 @@ function addCourse() {
 
     // Update display
     displayCourses();
+    saveCourses();
 }
 
 function displayCourses() {
@@ -111,6 +179,7 @@ function deleteCourse(id) {
     if (confirm('هل أنت متأكد من حذف هذا المقرر؟')) {
         courses = courses.filter(course => course.id !== id);
         displayCourses();
+        saveCourses();
     }
 }
 
@@ -158,6 +227,7 @@ function resetAll() {
         totalPointsDisplay.textContent = '0.0';
         gpaResultDisplay.textContent = '0.00';
         gpaResultDisplay.style.color = 'white';
+        saveCourses();
     }
 }
 
@@ -168,6 +238,100 @@ function clearForm() {
     courseNameInput.focus();
 }
 
+// ============================================
+// CUMULATIVE GPA CALCULATOR FUNCTIONS
+// ============================================
+
+function calculateCGPA() {
+    if (!prevGPAInput || !prevCreditsInput || !currentGPAInput || !currentCreditsInput) {
+        alert('خطأ في تحميل النموذج');
+        return;
+    }
+
+    const prevGPA = parseFloat(prevGPAInput.value);
+    const prevCredits = parseFloat(prevCreditsInput.value);
+    const currentGPA = parseFloat(currentGPAInput.value);
+    const currentCredits = parseFloat(currentCreditsInput.value);
+
+    // Validation
+    if (isNaN(prevGPA) || prevGPA < 0 || prevGPA > 4) {
+        alert('الرجاء إدخال معدل تراكمي سابق صحيح (0-4)');
+        prevGPAInput.focus();
+        return;
+    }
+
+    if (isNaN(prevCredits) || prevCredits < 0) {
+        alert('الرجاء إدخال عدد ساعات سابقة صحيح');
+        prevCreditsInput.focus();
+        return;
+    }
+
+    if (isNaN(currentGPA) || currentGPA < 0 || currentGPA > 4) {
+        alert('الرجاء إدخال معدل فصل حالي صحيح (0-4)');
+        currentGPAInput.focus();
+        return;
+    }
+
+    if (isNaN(currentCredits) || currentCredits < 0) {
+        alert('الرجاء إدخال عدد ساعات فصل حالية صحيحة');
+        currentCreditsInput.focus();
+        return;
+    }
+
+    // Check that at least one has value
+    if (prevCredits === 0 && currentCredits === 0) {
+        alert('الرجاء إدخال عدد ساعات معتمدة');
+        return;
+    }
+
+    // Calculate CGPA
+    const totalCredits = prevCredits + currentCredits;
+    const totalPoints = (prevGPA * prevCredits) + (currentGPA * currentCredits);
+    const newCGPA = totalCredits > 0 ? totalPoints / totalCredits : 0;
+
+    // Display results
+    totalAllCreditsDisplay.textContent = totalCredits.toFixed(0);
+    totalAllPointsDisplay.textContent = totalPoints.toFixed(2);
+    cgpaResultDisplay.textContent = newCGPA.toFixed(2);
+
+    // Add visual feedback
+    if (newCGPA >= 3.5) {
+        cgpaResultDisplay.style.color = '#27ae60'; // Green for excellent
+    } else if (newCGPA >= 3.0) {
+        cgpaResultDisplay.style.color = '#3498db'; // Blue for good
+    } else if (newCGPA >= 2.0) {
+        cgpaResultDisplay.style.color = '#f39c12'; // Orange for average
+    } else {
+        cgpaResultDisplay.style.color = '#e74c3c'; // Red for low
+    }
+
+    // Save to localStorage
+    saveCGPA();
+}
+
+function resetCGPA() {
+    if (!prevGPAInput || !prevCreditsInput || !currentGPAInput || !currentCreditsInput) {
+        return;
+    }
+
+    if (confirm('هل أنت متأكد من إعادة تعيين؟')) {
+        prevGPAInput.value = '';
+        prevCreditsInput.value = '';
+        currentGPAInput.value = '';
+        currentCreditsInput.value = '';
+        totalAllCreditsDisplay.textContent = '0';
+        totalAllPointsDisplay.textContent = '0.0';
+        cgpaResultDisplay.textContent = '0.00';
+        cgpaResultDisplay.style.color = 'white';
+        prevGPAInput.focus();
+        localStorage.removeItem('gpaCalculatorCGPA');
+    }
+}
+
+// ============================================
+// LOCAL STORAGE FUNCTIONS
+// ============================================
+
 // Load courses from localStorage on page load
 window.addEventListener('load', () => {
     const savedCourses = localStorage.getItem('gpaCalculatorCourses');
@@ -177,18 +341,38 @@ window.addEventListener('load', () => {
     }
 });
 
+// Load CGPA data from localStorage
+function loadCGPAData() {
+    const savedCGPA = localStorage.getItem('gpaCalculatorCGPA');
+    if (savedCGPA && prevGPAInput) {
+        const cgpaData = JSON.parse(savedCGPA);
+        prevGPAInput.value = cgpaData.prevGPA || '';
+        prevCreditsInput.value = cgpaData.prevCredits || '';
+        currentGPAInput.value = cgpaData.currentGPA || '';
+        currentCreditsInput.value = cgpaData.currentCredits || '';
+        totalAllCreditsDisplay.textContent = cgpaData.totalCredits || '0';
+        totalAllPointsDisplay.textContent = cgpaData.totalPoints || '0.0';
+        cgpaResultDisplay.textContent = cgpaData.newCGPA || '0.00';
+    }
+}
+
 // Save courses to localStorage whenever they change
 function saveCourses() {
     localStorage.setItem('gpaCalculatorCourses', JSON.stringify(courses));
 }
 
-// Save courses after any modification
-addCourseBtn.addEventListener('click', () => {
-    setTimeout(saveCourses, 100);
-});
-
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-danger') && e.target.classList.contains('btn-small')) {
-        setTimeout(saveCourses, 100);
-    }
-});
+// Save CGPA to localStorage
+function saveCGPA() {
+    if (!prevGPAInput) return;
+    
+    const cgpaData = {
+        prevGPA: prevGPAInput.value,
+        prevCredits: prevCreditsInput.value,
+        currentGPA: currentGPAInput.value,
+        currentCredits: currentCreditsInput.value,
+        totalCredits: totalAllCreditsDisplay.textContent,
+        totalPoints: totalAllPointsDisplay.textContent,
+        newCGPA: cgpaResultDisplay.textContent
+    };
+    localStorage.setItem('gpaCalculatorCGPA', JSON.stringify(cgpaData));
+}
