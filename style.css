@@ -7,6 +7,7 @@
     --cgpa-color: #9b59b6;
     --border-radius: 10px;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -16,75 +17,85 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: var(--dark-color);
     line-height: 1.6;
     min-height: 100vh;
-    padding: 20px;
+    padding: 15px;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     background: white;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
 }
+
+/* ============================================ */
+/* HEADER STYLES */
+/* ============================================ */
 
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 40px 20px;
+    padding: 45px 20px;
     text-align: center;
 }
 
 header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .subtitle {
     font-size: 1.1em;
-    opacity: 0.9;
+    opacity: 0.95;
+    font-weight: 300;
 }
+
+/* ============================================ */
+/* MAIN CONTENT */
+/* ============================================ */
 
 main {
-    padding: 40px 20px;
+    padding: 30px 20px;
 }
 
-h2 {
-    color: var(--dark-color);
-    margin-bottom: 20px;
-    font-size: 1.8em;
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 10px;
-}
+/* ============================================ */
+/* TABS NAVIGATION */
+/* ============================================ */
 
-/* Tabs Navigation */
 .tabs-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #ddd;
+    gap: 0;
+    margin-bottom: 35px;
+    border-bottom: 3px solid #e0e0e0;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
 }
 
 .tab-btn {
-    padding: 15px 20px;
+    padding: 18px 20px;
     border: none;
-    background: #f5f5f5;
-    color: var(--dark-color);
+    background: transparent;
+    color: #666;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1em;
     transition: all 0.3s ease;
     border-bottom: 4px solid transparent;
+    text-align: center;
 }
 
 .tab-btn:hover {
     background: #efefef;
+    color: var(--dark-color);
 }
 
 .tab-btn.active {
@@ -105,60 +116,137 @@ h2 {
 @keyframes fadeIn {
     from {
         opacity: 0;
+        transform: translateY(5px);
     }
     to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
-.add-course-form,
-.cgpa-form {
-    background: var(--light-color);
+/* ============================================ */
+/* CALCULATOR SECTIONS */
+/* ============================================ */
+
+.calculator-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.section-header {
+    margin-bottom: 10px;
+}
+
+.section-header h2 {
+    color: var(--dark-color);
+    font-size: 1.8em;
+    margin-bottom: 8px;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.section-description {
+    color: #666;
+    font-size: 0.95em;
+    margin-top: 8px;
+}
+
+/* ============================================ */
+/* FORM STYLES */
+/* ============================================ */
+
+.form-card {
+    background: #f8f9fa;
     padding: 25px;
     border-radius: var(--border-radius);
-    margin-bottom: 30px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-card h3 {
+    font-size: 1.3em;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-section h4 {
+    font-size: 1em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cgpa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 15px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 600;
     color: var(--dark-color);
+    font-size: 0.95em;
 }
 
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 12px;
+    padding: 12px 14px;
     border: 2px solid #ddd;
     border-radius: 6px;
     font-size: 1em;
-    transition: border-color 0.3s;
-    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: white;
+}
+
+.form-group input::placeholder {
+    color: #999;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.25);
+    background: #fff;
 }
 
-.divider-line {
-    height: 2px;
+.form-divider {
+    height: 1px;
     background: linear-gradient(90deg, transparent, #ddd, transparent);
     margin: 20px 0;
 }
+
+/* ============================================ */
+/* BUTTONS */
+/* ============================================ */
 
 .btn {
     padding: 12px 25px;
@@ -167,26 +255,35 @@ h2 {
     font-size: 1em;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-full {
+    width: 100%;
 }
 
 .btn-large {
     padding: 14px 30px;
-    font-size: 1.1em;
-    width: 100%;
+    font-size: 1.05em;
 }
 
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
-    width: 100%;
 }
 
 .btn-primary:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
 }
 
 .btn-success {
@@ -200,6 +297,10 @@ h2 {
     box-shadow: var(--shadow);
 }
 
+.btn-success:active {
+    transform: translateY(0);
+}
+
 .btn-danger {
     background-color: var(--danger-color);
     color: white;
@@ -211,24 +312,42 @@ h2 {
     box-shadow: var(--shadow);
 }
 
+.btn-danger:active {
+    transform: translateY(0);
+}
+
 .btn-small {
-    padding: 8px 15px;
-    font-size: 0.9em;
+    padding: 8px 14px;
+    font-size: 0.85em;
     width: auto;
 }
 
-.courses-section,
-.courses-list-section,
-.results-section,
-.cgpa-section,
-.cgpa-results-section {
-    margin-bottom: 30px;
+/* ============================================ */
+/* TABLE STYLES */
+/* ============================================ */
+
+.courses-list-section {
+    margin-top: 20px;
+}
+
+.courses-list-section h3 {
+    font-size: 1.3em;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .courses-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .courses-table thead {
@@ -236,144 +355,210 @@ h2 {
     color: white;
 }
 
-.courses-table th,
-.courses-table td {
-    padding: 15px;
+.courses-table th {
+    padding: 14px;
     text-align: right;
-    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.courses-table td {
+    padding: 14px;
+    text-align: right;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.courses-table tbody tr {
+    transition: background-color 0.2s ease;
 }
 
 .courses-table tbody tr:hover {
-    background-color: var(--light-color);
+    background-color: #f5f5f5;
 }
 
 .courses-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #fafafa;
 }
 
 .empty-message {
     text-align: center;
     color: #999;
-    padding: 30px;
+    padding: 40px 20px;
     font-style: italic;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
 }
 
-.result-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+/* ============================================ */
+/* RESULTS SECTION */
+/* ============================================ */
+
+.results-section,
+.cgpa-results-section {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
 }
 
-.result-item {
-    background: var(--light-color);
-    padding: 20px;
-    border-radius: var(--border-radius);
-    text-align: center;
-}
-
-.result-item label {
-    display: block;
-    font-weight: bold;
-    color: var(--dark-color);
-    margin-bottom: 10px;
-}
-
-.result-value {
-    font-size: 2em;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-.gpa-card {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    text-align: center;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-}
-
-.gpa-card label {
-    display: block;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.gpa-value {
-    font-size: 3.5em;
-    font-weight: bold;
-}
-
-/* CGPA Specific Styles */
-.cgpa-result-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.cgpa-result-item {
-    background: var(--light-color);
-    padding: 20px;
-    border-radius: var(--border-radius);
-    text-align: center;
-    border-right: 4px solid var(--cgpa-color);
-}
-
-.cgpa-result-item label {
-    display: block;
-    font-weight: bold;
-    color: var(--dark-color);
-    margin-bottom: 10px;
-}
-
-.cgpa-result-value {
-    font-size: 2em;
-    color: var(--cgpa-color);
-    font-weight: bold;
-}
-
-.cgpa-card {
-    background: linear-gradient(135deg, var(--cgpa-color), #8e44ad);
-    color: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    text-align: center;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-}
-
-.cgpa-card label {
-    display: block;
-    font-size: 1.2em;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-.cgpa-value {
-    font-size: 3.5em;
-    font-weight: bold;
-}
-
-.button-group {
+.stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
+
+.stat-card {
+    background: linear-gradient(135deg, #f0f4ff 0%, #f0f8ff 100%);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-card.cgpa-stat {
+    border-left-color: var(--cgpa-color);
+    background: linear-gradient(135deg, #f5f0ff 0%, #faf0ff 100%);
+}
+
+.stat-label {
+    display: block;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.stat-card.cgpa-stat .stat-value {
+    color: var(--cgpa-color);
+}
+
+/* ============================================ */
+/* GPA RESULT CARDS */
+/* ============================================ */
+
+.gpa-result-card {
+    background: linear-gradient(135deg, var(--primary-color), #2980b9);
+    color: white;
+    padding: 35px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.gpa-result-label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    font-weight: 600;
+    opacity: 0.95;
+    letter-spacing: 0.5px;
+}
+
+.gpa-result-value {
+    font-size: 4em;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* CGPA Result Card */
+.cgpa-result-card {
+    background: linear-gradient(135deg, var(--cgpa-color), #8e44ad);
+    color: white;
+    padding: 35px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.cgpa-result-label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    font-weight: 600;
+    opacity: 0.95;
+    letter-spacing: 0.5px;
+}
+
+.cgpa-result-value {
+    font-size: 4em;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* ============================================ */
+/* BUTTON GROUPS */
+/* ============================================ */
+
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* ============================================ */
+/* FORMULA BOX */
+/* ============================================ */
+
+.formula-box {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.formula-box h4 {
+    color: #856404;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.formula-text {
+    color: #856404;
+    font-size: 0.95em;
+    line-height: 1.6;
+    font-family: 'Courier New', monospace;
+}
+
+/* ============================================ */
+/* FOOTER */
+/* ============================================ */
 
 footer {
     background-color: var(--dark-color);
     color: white;
     text-align: center;
     padding: 20px;
+    font-size: 0.9em;
 }
+
+/* ============================================ */
+/* RESPONSIVE DESIGN */
+/* ============================================ */
 
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 1em;
     }
 
     main {
@@ -382,24 +567,41 @@ footer {
 
     .tabs-container {
         grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin-bottom: 25px;
     }
 
     .tab-btn {
-        font-size: 0.95em;
-        padding: 12px 15px;
+        font-size: 0.9em;
+        padding: 14px 12px;
     }
 
-    .result-card,
-    .cgpa-result-card {
-        grid-template-columns: 1fr;
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-card h3 {
+        font-size: 1.15em;
     }
 
     .form-row {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
     .button-group {
         grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .courses-table {
@@ -408,22 +610,153 @@ footer {
 
     .courses-table th,
     .courses-table td {
-        padding: 10px 5px;
+        padding: 10px 8px;
     }
 
-    .gpa-value,
-    .cgpa-value {
-        font-size: 2.5em;
+    .gpa-result-value,
+    .cgpa-result-value {
+        font-size: 3em;
+    }
+
+    .gpa-result-card,
+    .cgpa-result-card {
+        padding: 25px;
+    }
+
+    .stat-value {
+        font-size: 1.8em;
     }
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        padding: 30px 15px;
+    }
+
     header h1 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
     .subtitle {
+        font-size: 0.95em;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .tabs-container {
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 20px;
+    }
+
+    .tab-btn {
+        font-size: 0.8em;
+        padding: 12px 10px;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    .form-card {
+        padding: 15px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 16px;
+        padding: 11px 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .btn-full {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
+
+    .gpa-result-card,
+    .cgpa-result-card {
+        padding: 20px;
+    }
+
+    .gpa-result-label,
+    .cgpa-result-label {
         font-size: 1em;
+    }
+
+    .gpa-result-value,
+    .cgpa-result-value {
+        font-size: 2.5em;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-label {
+        font-size: 0.8em;
+    }
+
+    .stat-value {
+        font-size: 1.6em;
+    }
+
+    .courses-table {
+        font-size: 0.85em;
+    }
+
+    .courses-table th,
+    .courses-table td {
+        padding: 8px 6px;
+    }
+
+    .button-group {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .empty-message {
+        padding: 25px 15px;
+        font-size: 0.9em;
+    }
+
+    .section-description {
+        font-size: 0.9em;
+    }
+
+    .formula-box {
+        padding: 15px;
+    }
+
+    .formula-box h4 {
+        font-size: 0.95em;
+    }
+
+    .formula-text {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 360px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+
+    h2 {
+        font-size: 1.2em;
     }
 
     .form-group input,
@@ -431,18 +764,8 @@ footer {
         font-size: 16px;
     }
 
-    .gpa-card label,
-    .cgpa-card label {
-        font-size: 1em;
-    }
-
-    .gpa-value,
-    .cgpa-value {
+    .gpa-result-value,
+    .cgpa-result-value {
         font-size: 2em;
-    }
-
-    .tab-btn {
-        font-size: 0.85em;
-        padding: 10px 12px;
     }
 }
