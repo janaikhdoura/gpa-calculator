@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة معدل الفصل الدراسي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>حاسبة معدل الفصل الدراسي</h1>
+            <p class="subtitle">احسب معدلك الجامعي بسهولة</p>
+        </header>
+
+        <main>
+            <div class="courses-section">
+                <h2>المقررات الدراسية</h2>
+                
+                <div class="add-course-form">
+                    <div class="form-group">
+                        <label for="courseName">اسم المقرر</label>
+                        <input type="text" id="courseName" placeholder="مثال: الرياضيات 101">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="creditHours">الساعات المعتمدة</label>
+                        <input type="number" id="creditHours" placeholder="3" min="1" max="6">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gradeSelect">التقدير</label>
+                        <select id="gradeSelect">
+                            <option value="">اختر التقدير</option>
+                            <option value="4.0">A+ (4.0)</option>
+                            <option value="4.0">A (4.0)</option>
+                            <option value="3.7">A- (3.7)</option>
+                            <option value="3.3">B+ (3.3)</option>
+                            <option value="3.0">B (3.0)</option>
+                            <option value="2.7">B- (2.7)</option>
+                            <option value="2.3">C+ (2.3)</option>
+                            <option value="2.0">C (2.0)</option>
+                            <option value="1.7">C- (1.7)</option>
+                            <option value="1.3">D+ (1.3)</option>
+                            <option value="1.0">D (1.0)</option>
+                            <option value="0.0">F (0.0)</option>
+                        </select>
+                    </div>
+                    
+                    <button id="addCourseBtn" class="btn btn-primary">إضافة مقرر</button>
+                </div>
+            </div>
+
+            <div class="courses-list-section">
+                <h2>قائمة المقررات</h2>
+                <table id="coursesTable" class="courses-table">
+                    <thead>
+                        <tr>
+                            <th>اسم المقرر</th>
+                            <th>الساعات</th>
+                            <th>التقدير</th>
+                            <th>النقاط</th>
+                            <th>الحذف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coursesBody">
+                    </tbody>
+                </table>
+                <p id="emptyMessage" class="empty-message">لا توجد مقررات مضافة حتى الآن</p>
+            </div>
+
+            <div class="results-section">
+                <div class="result-card">
+                    <div class="result-item">
+                        <label>إجمالي الساعات المعتمدة:</label>
+                        <p id="totalCredits" class="result-value">0</p>
+                    </div>
+                    <div class="result-item">
+                        <label>إجمالي النقاط:</label>
+                        <p id="totalPoints" class="result-value">0.0</p>
+                    </div>
+                </div>
+
+                <div class="gpa-card">
+                    <label>معدل الفصل الدراسي (GPA):</label>
+                    <p id="gpaResult" class="gpa-value">0.00</p>
+                </div>
+
+                <div class="button-group">
+                    <button id="calculateBtn" class="btn btn-success">احسب المعدل</button>
+                    <button id="resetBtn" class="btn btn-danger">حذف الكل</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 حاسبة معدل الفصل الدراسي | جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
