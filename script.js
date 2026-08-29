@@ -235,12 +235,13 @@ function calculateCGPA() {
         return;
     }
 
-    // Calculate CGPA
+    // Calculate CGPA using the correct formula:
+    // New CGPA = ((Previous cumulative GPA × Previous completed credit hours) + (Current semester GPA × Current semester credit hours)) ÷ (Previous completed credit hours + Current semester credit hours)
     const totalCredits = prevCredits + currentCredits;
     const totalPoints = (prevGPA * prevCredits) + (currentGPA * currentCredits);
     const newCGPA = totalCredits > 0 ? totalPoints / totalCredits : 0;
 
-    // Display results
+    // Display results rounded to 2 decimal places
     totalAllCreditsDisplay.textContent = totalCredits.toFixed(0);
     totalAllPointsDisplay.textContent = totalPoints.toFixed(2);
     cgpaResultDisplay.textContent = newCGPA.toFixed(2);
